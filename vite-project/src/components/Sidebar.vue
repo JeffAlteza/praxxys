@@ -3,11 +3,12 @@
       id="view"
       class="h-full flex flex-row"
       x-data="{ sidenav: true }"
+      
     >
 
       <div
         id="sidebar"
-        class="bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out"
+        class="bg-white  h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out"
         x-show="sidenav"
         @click.away="sidenav = false"
       >
@@ -20,7 +21,7 @@
           </h1>
           <div id="menu" class="flex flex-col space-y-2">
             <a
-              href="/product-list"
+              href="/admin/product-list"
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-amber-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
@@ -41,9 +42,13 @@
       </div>
      
     </div>
+    <RouterView />
+
 </template>
 
 <script>
+import { RouterView } from "vue-router";
+
 export default {
     name: "Sidebar",
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto py-10">
+  <div class="container mx-auto py-10 ">
     <h2 class="text-2xl font-semibold mb-4">{{ formTitle }}</h2>
     <form @submit.prevent="handleSubmit" class="max-w-xl mx-auto bg-white p-8 rounded-lg">
       <div class="mb-4">
@@ -14,6 +14,10 @@
         <label for="productDateTime" class="block text-gray-800 text-sm font-bold mb-2 rounded-lg">Product Datetime</label>
         <input v-model="productDateTime" type="text" id="productDateTime" name="productDateTime" class="w-full p-3 border rounded" />
       </div>
+      <div class="mb-4">
+        <label for="productDescription" class="block text-gray-800 text-sm font-bold mb-2">Image</label>
+        <input type="file" id="productDescription" name="productDescription" class="w-full p-3 border rounded-lg" required>
+      </div>
       <label for="productCategory" class="block text-gray-800 text-sm font-bold mb-2">Category</label>
       <select v-model="productCategory" id="productCategory" name="productCategory" class="mb-4 bg-white border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
         <option value="air">Air</option>
@@ -21,7 +25,7 @@
         <option value="land">Land</option>
       </select>
       <div class="flex items-center justify-end gap-2">
-        <a href="/product-list" class="bg-amber-500 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg">
+        <a href="/admin/product-list" class="bg-amber-500 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg">
           Cancel
         </a>
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
@@ -75,7 +79,7 @@ export default {
   methods: {
     async fetchProductDetails(productId) {
       try {
-        const response = await axios.get(`http://praxxys.test/api/products/${productId}`);
+        const response = await axios.get(domain + `/api/products/${productId}`);
         const product = response.data;
         this.productName = product.name;
         this.productDescription = product.description;
@@ -96,7 +100,7 @@ export default {
 
     async createProduct() {
       try {
-        const response = await axios.post('http://praxxys.test/api/products', {
+        const response = await axios.post(domain + '/api/products', {
           name: this.productName,
           description: this.productDescription,
           category: this.productCategory,
@@ -105,7 +109,7 @@ export default {
 
         console.log(response.data);
         window.alert('Product created successfully');
-        this.$router.push({ path: "/product-list" });
+        this.$router.push({ path: "/admin/product-list" });
       } catch (error) {
         console.error('Error creating product:', error);
       }
@@ -113,7 +117,7 @@ export default {
 
     async updateProduct() {
       try {
-        const response = await axios.put(`http://praxxys.test/api/products/${this.$route.query.productId}`, {
+        const response = await axios.put(domain + `/api/products/${this.$route.query.productId}`, {
           name: this.productName,
           description: this.productDescription,
           category: this.productCategory,
@@ -122,7 +126,7 @@ export default {
 
         console.log(response.data);
         window.alert('Product updated successfully');
-        this.$router.push({ path: "/product-list" });
+        this.$router.push({ path: "/admin/product-list" });
       } catch (error) {
         console.error('Error updating product:', error);
       }
